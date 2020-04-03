@@ -23,14 +23,14 @@ describe('memes routes', () => {
     return request(app)
       .post('/api/v1/memes')
       .send({
-        top: 'My instructor went to topeka',
+        top: 'My instructor went to Topeka',
         image: '../../assets/facebook-server-farm-arctic-lule-sweden-12.jpg',
         bottom: '...and all I got was this stupid meme.'
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          top: 'My instructor went to topeka',
+          top: 'My instructor went to Topeka',
           image: '../../assets/facebook-server-farm-arctic-lule-sweden-12.jpg',
           bottom: '...and all I got was this stupid meme.',
           __v: 0
@@ -60,7 +60,17 @@ describe('memes routes', () => {
     return request(app)
       .get('/api/v1/memes')
       .then(res => {
-        expect(res.send).toEqual(memes);
+        memes.forEach(meme => {
+          expect(res.body).toContainEqual({
+            _id: meme._id.toString(),
+            top: meme.top,
+            image: meme.image,
+            bottom: meme.bottom,
+            __v: 0
+          });
+        });
       });
   });
+
+  
 });
