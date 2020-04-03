@@ -5,7 +5,7 @@ const app = require('../lib/app');
 const connect = require('../lib/utils/connect');
 const mongoose = require('mongoose');
 
-describe('app routes', () => {
+describe('memes routes', () => {
   beforeAll(() => {
     connect();
   });
@@ -18,7 +18,7 @@ describe('app routes', () => {
     return mongoose.connection.close();
   });
 
-  it('creates a meme' () => {
+  it('creates a meme', () => {
     return request(app)
       .post('/api/v1/memes')
       .send({
@@ -34,6 +34,6 @@ describe('app routes', () => {
           bottom: '...and all I got was this stupid meme.',
           __v: 0
         });
-      })
+      });
   });
 });
