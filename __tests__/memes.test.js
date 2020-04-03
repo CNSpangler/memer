@@ -93,7 +93,7 @@ describe('memes routes', () => {
       });
   });
 
-  it('updates a meme by id', () => {
+  it('updates a meme by id', async() => {
     const meme = await Meme.create(
       {
         top: 'My instructor went to Topeka',
@@ -111,7 +111,7 @@ describe('memes routes', () => {
           image: '../../assets/facebook-server-farm-arctic-lule-sweden-12.jpg',
           bottom: '...and all I got was this amazing meme',
           __v: 0
-        })
-      })
-  })
+        });
+      });
+  });
 });
