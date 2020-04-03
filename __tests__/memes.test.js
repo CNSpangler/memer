@@ -92,4 +92,26 @@ describe('memes routes', () => {
         });
       });
   });
+
+  it('updates a meme by id', () => {
+    const meme = await Meme.create(
+      {
+        top: 'My instructor went to Topeka',
+        image: '../../assets/facebook-server-farm-arctic-lule-sweden-12.jpg',
+        bottom: '...and all I got was this stupid meme.'
+      });
+
+    return request(app)
+      .patch(`/api/v1/memes/${meme._id}`)
+      .send({ bottom: '...and all I got was this amazing meme' })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          top: 'My instructor went to Topeka',
+          image: '../../assets/facebook-server-farm-arctic-lule-sweden-12.jpg',
+          bottom: '...and all I got was this amazing meme',
+          __v: 0
+        })
+      })
+  })
 });
