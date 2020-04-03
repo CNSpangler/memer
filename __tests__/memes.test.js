@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 const connect = require('../lib/utils/connect');
 const mongoose = require('mongoose');
+const Meme = require('../lib/models/Meme');
 
 describe('memes routes', () => {
   beforeAll(() => {
@@ -34,6 +35,32 @@ describe('memes routes', () => {
           bottom: '...and all I got was this stupid meme.',
           __v: 0
         });
+      });
+  });
+
+  it('gets all memes', async() => {
+    const memes = await Meme.create([
+      {
+        top: 'My instructor went to Topeka',
+        image: '../../assets/facebook-server-farm-arctic-lule-sweden-12.jpg',
+        bottom: '...and all I got was this stupid meme.'
+      },
+      {
+        top: 'I am serious.',
+        image: 'doge.jpg',
+        bottom: 'Dogs are better than people.'
+      },
+      {
+        top: 'Spot',
+        image: 'spot.jpg',
+        bottom: 'if you don\'t know, now you know.'
+      }
+    ]);
+
+    return request(app)
+      .get('/api/v1/memes')
+      .then(res => {
+        expect(res.send).toEqual(memes);
       });
   });
 });
